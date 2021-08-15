@@ -25,12 +25,12 @@ const Table = ({ tiles, onClick, activeTiles, wordIsValid }: TableProps) => {
     <TableContainer>
       {tiles.map((t, i) => {
         const id = `${t}${i}`
+        console.log({wordIsValid}, {activeTiles});
         return (
           <Tile
             key={id}
             text={t}
-            color={wordIsValid ? activeTiles[i] ? Colors.valid : Colors.default: Colors.invalid}
-            //color={tileIsValid ? Colors.valid : Colors.default}
+            color={activeTiles[i] && !wordIsValid ? Colors.invalid: activeTiles[i] && wordIsValid ? Colors.valid : Colors.default}
             onClick={() => onClick(i)}
           />
         )
