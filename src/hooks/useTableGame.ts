@@ -6,8 +6,8 @@ const rowLength = ROW_LENGT
 const diagonalLength = 2
 
 enum Limits {
-    right = 3,
-    left = 0
+  right = 3,
+  left = 0,
 }
 
 interface OrientationTypes {
@@ -40,14 +40,14 @@ export const useTableGame = (initialize: useTableGameProps) => {
   useEffect(() => {
     const isValidState = moveIsValid(lastIndex, actualIndex)
     setIsValid(isValidState)
+    
     if (isValidState) {
       setWord(prevWord =>
         prevWord.concat(tiles[actualIndex].toLocaleLowerCase())
       )
       setActiveTiles(prevTiles => ({ ...prevTiles, [actualIndex]: true }))
-    }
-    else {
-        setActualIndex(lastIndex)
+    } else {
+      setActualIndex(lastIndex)
     }
   }, [actualIndex, lastIndex])
 
@@ -72,7 +72,6 @@ export const useTableGame = (initialize: useTableGameProps) => {
     } else {
       setLastIndex(actualIndex)
       setActualIndex(newIndex)
-      
     }
   }
 
@@ -91,7 +90,7 @@ export const useTableGame = (initialize: useTableGameProps) => {
       if (orientation === 'top' || orientation === 'bottom') {
         const actualRow = getRowVertical(indexRow, orientation)
         const possibleMove = actualRow + step
-       
+
         if (move == possibleMove) return true
         return false
       } else if (
@@ -100,12 +99,14 @@ export const useTableGame = (initialize: useTableGameProps) => {
       ) {
         const actualRow = getRowHorizontal(indexRow)
         const possibleMove = actualRow + step + orientationObj[orientation]
-        
+
         if (move === possibleMove) return true
         return false
       }
       if (
-        (orientation == 'diagonal' && diagonalMove == 'right' && step != Limits.right) ||
+        (orientation == 'diagonal' &&
+          diagonalMove == 'right' &&
+          step != Limits.right) ||
         (diagonalMove == 'left' && step != Limits.left)
       ) {
         const actualRow = getRowVertical(indexRow, orientation)
@@ -115,7 +116,7 @@ export const useTableGame = (initialize: useTableGameProps) => {
           diagonalLength * rowLength +
           step +
           orientationObj[diagonalMove]
-       
+
         if (move === possibleMoveTop || move === possibleMoveBottom) return true
         return false
       }
@@ -126,7 +127,6 @@ export const useTableGame = (initialize: useTableGameProps) => {
   // Validating if there is a possible valid movement
   const moveIsValid = (lastIndex: number, actualIndex: number) => {
     const move = lastIndex % rowLength
-    console.log({lastIndex},{actualIndex},{move})
     const possibleMove = validMoveToRow(lastIndex, actualIndex, move)
     const possibleItSelf = possibleMove('itself')
     if (possibleItSelf) return true

@@ -18,7 +18,6 @@ const App = () => {
     setItem(pos)
   }
 
-
   const wordExist = dictionary.words.includes(word) || word.length == 0
 
   return (
