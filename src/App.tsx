@@ -12,7 +12,7 @@ import Input from 'components/atoms/Input'
 import Header from 'components/atoms/Header'
 
 const App = () => {
-  const { tiles, word, activeTiles, isValid, setItem, reset } = useTableGame(board)
+  const { tiles, word, activeTiles, setItem, reset } = useTableGame(board)
 
   const onClick = (pos: number) => {
     setItem(pos)
@@ -23,13 +23,11 @@ const App = () => {
 
   return (
     <AppContainer>
-      {console.log({ word }, { tiles })}
-      <Header onReset={reset} />
+      {word.length > 0 && <Header onReset={reset} />}
       <Table
         tiles={tiles}
         activeTiles={activeTiles}
         onClick={onClick}
-        isValid={isValid}
         wordIsValid={wordExist}
       />
       <Input placeholder='Lets go!' value={word} />

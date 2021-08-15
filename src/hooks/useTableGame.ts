@@ -39,9 +39,12 @@ export const useTableGame = (initialize: useTableGameProps) => {
         setWord(prevWord => prevWord.concat(tiles[actualIndex].toLocaleLowerCase()))
         setActiveTiles(prevTiles => ({ ...prevTiles, [actualIndex]: true }))
     }
-  }, [actualIndex])
+  }, [actualIndex, lastIndex])
 
-  const reset = () => setActiveTiles([])
+  const reset = () => {
+    setActiveTiles([])
+    setWord("")
+  }
 
   const getRow = (pos: number): number => {
     if (pos >= 0 && pos <= 3) return 0

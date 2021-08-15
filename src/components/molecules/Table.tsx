@@ -15,9 +15,8 @@ const TableContainer = styled.div`
 interface TableProps {
   tiles: string[]
   activeTiles: ActiveTitle
-  onClick(arg: number): void
-  isValid: boolean
   wordIsValid: boolean
+  onClick(arg: number): void
 }
 
 const Table = ({ tiles, onClick, activeTiles, wordIsValid }: TableProps) => {
@@ -25,12 +24,13 @@ const Table = ({ tiles, onClick, activeTiles, wordIsValid }: TableProps) => {
     <TableContainer>
       {tiles.map((t, i) => {
         const id = `${t}${i}`
-        console.log({wordIsValid}, {activeTiles});
+        const isInvalid = activeTiles[i] && !wordIsValid 
+        const isValid = activeTiles[i] && wordIsValid
         return (
           <Tile
             key={id}
             text={t}
-            color={activeTiles[i] && !wordIsValid ? Colors.invalid: activeTiles[i] && wordIsValid ? Colors.valid : Colors.default}
+            color={isInvalid ? Colors.invalid: isValid ? Colors.valid : Colors.default}
             onClick={() => onClick(i)}
           />
         )
