@@ -1,26 +1,41 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+// Data
+import board from './data/test-board-2.json'
+// Hooks
+import { useTableGame } from 'hooks/useTableGame'
+// Styles
+import './App.css'
+import AppContainer from 'components/atoms/Container'
+import Table from 'components/molecules/Table'
+import Input from 'components/atoms/Input'
+import Header from 'components/atoms/Header'
+import { Colors } from 'types'
 
-function App() {
+const App = () => {
+  const { tiles, activeTiles, isValid, setItem, reset } = useTableGame(board)
+
+  const onClick = (pos: number) => {
+    setItem(pos)
+    console.log({ isValid })
+  }
+
+  const activeLetters = tiles
+    .filter((tile, index) => activeTiles[index] === true)
+    .join('')
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <AppContainer>
+      <Header onReset={reset} />
+      <Table
+        tiles={tiles}
+        activeTiles={activeTiles}
+        onClick={onClick}
+        isValid={isValid}
+        color={Colors.default}
+      />
+      <Input placeholder='Lets go!' value={activeLetters} />
+    </AppContainer>
+  )
 }
 
-export default App;
+export default App
