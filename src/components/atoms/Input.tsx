@@ -14,7 +14,7 @@ interface InputProps {
 
 const Input = ({ placeholder, value }: InputProps) => {
   return (
-    <InputContainer placeholder={placeholder} value={value}></InputContainer>
+    <InputContainer readOnly placeholder={placeholder} value={value}></InputContainer>
   )
 }
 
