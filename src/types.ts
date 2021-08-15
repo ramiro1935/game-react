@@ -6,7 +6,6 @@ export enum Colors {
     default = "default"
 }
 
-
 export interface ActiveTitle {
     [key: number]: boolean
 }

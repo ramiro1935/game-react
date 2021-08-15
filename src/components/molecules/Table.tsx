@@ -17,21 +17,20 @@ interface TableProps {
   activeTiles: ActiveTitle
   onClick(arg: number): void
   isValid: boolean
-  //wordIsValid: boolean
+  wordIsValid: boolean
 }
 
-const Table = ({ tiles, onClick, activeTiles }: TableProps) => {
+const Table = ({ tiles, onClick, activeTiles, wordIsValid }: TableProps) => {
   return (
     <TableContainer>
       {tiles.map((t, i) => {
         const id = `${t}${i}`
-        const tileIsValid = activeTiles[i] 
         return (
           <Tile
             key={id}
             text={t}
-            //color={wordIsValid ? activeTiles[i] && isValid ? Colors.valid : Colors.default: Colors.invalid}
-            color={tileIsValid ? Colors.valid : Colors.default}
+            color={wordIsValid ? activeTiles[i] ? Colors.valid : Colors.default: Colors.invalid}
+            //color={tileIsValid ? Colors.valid : Colors.default}
             onClick={() => onClick(i)}
           />
         )

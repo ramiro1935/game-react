@@ -26,15 +26,17 @@ const orientationObj: OrientationTypes = {
 
 export const useTableGame = (initialize: useTableGameProps) => {
   const [tiles] = useState<string[]>(initialize?.board ?? [])
-  const [activeTiles, setActiveTiles] = useState<ActiveTitle>({})
+  const [activeTiles, setActiveTiles] = useState<ActiveTitle>([])
   const [lastIndex, setLastIndex] = useState<number>(-1)
   const [actualIndex, setActualIndex] = useState<number>(-1)
   const [isValid, setIsValid] = useState<boolean>(true)
+  const [word, setWord] = useState<string>('')
 
   useEffect(() => {
     const isValidState = moveIsValid(lastIndex, actualIndex)
     setIsValid(isValidState)
     if(isValidState){
+        setWord(prevWord => prevWord.concat(tiles[actualIndex].toLocaleLowerCase()))
         setActiveTiles(prevTiles => ({ ...prevTiles, [actualIndex]: true }))
     }
   }, [actualIndex])
@@ -65,32 +67,18 @@ export const useTableGame = (initialize: useTableGameProps) => {
 
   const validMoveToRow = (last: number, move: number, step: number) => {
     return (orientation: string, diagonalMove: string = '') => {
-      if (orientation === 'itself' && move === last) return true
+      if (orientation === 'itself' && move === last && move != -1) return true
       const indexRow = getRow(last)
       if (orientation === 'top' || orientation === 'bottom') {
         const actualRow = getRowVertical(indexRow, orientation)
         const possibleMove = actualRow + step
         if (move == possibleMove) return true
-        /*console.log(
-          { actualRow },
-          { step },
-          orientationObj[orientation],
-          { possibleMove },
-          { move },
-          { orientation }
-        )*/
+       
       } else if (orientation === 'left' || orientation === 'right') {
         const actualRow = getRowHorizontal(indexRow)
         const possibleMove = actualRow + step + orientationObj[orientation]
         if (move === possibleMove) return true
-      /*  console.log(
-          { actualRow },
-          { step },
-          orientationObj[orientation],
-          { possibleMove },
-          { move },
-          { orientation }
-        )*/
+     
       } else if (orientation == 'diagonal') {
         const actualRow = getRowVertical(indexRow, orientation)
         const possibleMoveTop = actualRow + step + orientationObj[diagonalMove]
@@ -100,16 +88,7 @@ export const useTableGame = (initialize: useTableGameProps) => {
           step +
           orientationObj[diagonalMove]
         if (move === possibleMoveTop || move === possibleMoveBottom) return true
-       /* console.log(
-          { actualRow },
-          { possibleMoveBottom },
-          { possibleMoveTop },
-          { rowLength },
-          { step },
-          orientationObj[orientation],
-          { move },
-          { orientation }
-        )*/
+      
         return false
       }
       return false
@@ -136,5 +115,5 @@ export const useTableGame = (initialize: useTableGameProps) => {
     return false
   }
 
-  return { tiles, activeTiles, isValid, setItem, reset }
+  return { tiles, word, activeTiles, isValid, setItem, reset }
 }

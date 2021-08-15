@@ -12,28 +12,25 @@ import Input from 'components/atoms/Input'
 import Header from 'components/atoms/Header'
 
 const App = () => {
-  const { tiles, activeTiles, isValid, setItem, reset } = useTableGame(board)
+  const { tiles, word, activeTiles, isValid, setItem, reset } = useTableGame(board)
 
   const onClick = (pos: number) => {
     setItem(pos)
   }
 
-  const word = tiles
-    .filter((_tile, index) => activeTiles[index] === true)
-    .join('')
 
- const wordExist = dictionary.words.includes(word) || word.length == 0
+  const wordExist = dictionary.words.includes(word) || word.length == 0
 
   return (
     <AppContainer>
-        {console.log({activeTiles},{tiles})}
+      {console.log({ word }, { tiles })}
       <Header onReset={reset} />
       <Table
         tiles={tiles}
         activeTiles={activeTiles}
         onClick={onClick}
         isValid={isValid}
-       // wordIsValid={wordExist}
+        wordIsValid={wordExist}
       />
       <Input placeholder='Lets go!' value={word} />
     </AppContainer>
