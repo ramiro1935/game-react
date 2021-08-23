@@ -29,7 +29,7 @@ const TileContainer = styled.button`
     text-shadow: -2px -1px 4px #558abb;
   }
 `
-
+/* eslint-disable @typescript-eslint/no-explicit-any*/
 interface TileProps {
   text: string
   color: Colors
